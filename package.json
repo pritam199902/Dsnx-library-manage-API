@@ -1,0 +1,25 @@
+{
+  "name": "libraryapi",
+  "version": "1.0.0",
+  "description": "Library management API with Books, User, Auth-system, Records, Payments ect..",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "author": "Pritam Das",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "jwt": "^0.2.0",
+    "mysql2": "^2.2.5",
+    "nodemon": "^2.0.7",
+    "sequelize": "^6.5.1",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.2.0"
+  }
+}
