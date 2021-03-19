@@ -90,8 +90,8 @@ exports.RegisterUser = async (req, res) => {
                         } else {
                             context.error = false;
                             context.message = "Successfull";
-                            context.user = result[0];
-                            context.user.category = cat[0].category;
+                            context.data = result[0];
+                            context.data.category = cat[0].category;
                 
                             console.log(context);
                             return res.json(context);
@@ -155,9 +155,9 @@ exports.GetAllUser = async (req, res) => {
         } else {
             context.error = false;
             context.message = "Searching complete";
-            context.user = result;
+            context.data = result;
 
-            console.log(context);
+            // console.log(context);
             return res.json(context);
         }
     });
@@ -174,16 +174,16 @@ exports.GetUserById = async(req, res) => {
     const getUser = `SELECT id, name, username, category, registration_date, isActive FROM user WHERE id = ${id} ;`;
     await db.query(getUser, (err, result) => {
         if (err) {
-           return errorHandle(req, res, err.message);
+           return errorHandle(req, res, err.sqlMessage);
         } else if (result.length < 1) {
             const msg = "No result found!";
             return errorHandle(req, res, msg);
         } else {
             context.error = false;
             context.message = "Successfull";
-            context.user = result;
+            context.data = result;
 
-            console.log(context);
+            // console.log(context);
             return res.json(context);
         }
     });
@@ -203,13 +203,10 @@ exports.UpdateUserById =async (req, res) => {
   db.query(delUser, (err, result) => {
         if (err) {
            return errorHandle(req, res, err.sqlMessage);
-        } else if (result.length < 1) {
-            const msg = "No result found!";
-            return errorHandle(req, res, msg);
         } else {
             context.error = false;
             context.message = "User updated!";
-            console.log(result);
+            // console.log(result);
             return res.json(context);
         }
     });
@@ -226,13 +223,10 @@ exports.DeleteUserById =async (req, res) => {
     await db.query(delUser, (err, result) => {
         if (err) {
            return errorHandle(req, res, err.message);
-        } else if (result.length < 1) {
-            const msg = "No result found!";
-            return errorHandle(req, res, msg);
         } else {
             context.error = false;
             context.message = "User deleted!";
-            console.log(result);
+            // console.log(result);
             return res.json(context);
         }
     });

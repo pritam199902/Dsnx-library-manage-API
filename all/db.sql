@@ -1,5 +1,5 @@
 create database if not exists mylibrary;
-CREATE TABLE User (
+CREATE TABLE User  (
 	id bigint NOT NULL AUTO_INCREMENT,
 	name varchar(255),
 	username varchar(255) NOT NULL UNIQUE,
@@ -17,26 +17,27 @@ CREATE TABLE Category (
 	PRIMARY KEY (id)
 );
 
+CREATE TABLE Subject (
+	id bigint NOT NULL UNIQUE AUTO_INCREMENT,
+	subject varchar(200) NOT NULL,
+	PRIMARY KEY (id)
+);
+
 CREATE TABLE Book (
 	id bigint NOT NULL AUTO_INCREMENT,
 	name varchar(255) NOT NULL,
 	isbn bigint(13) NOT NULL UNIQUE,
-	copies_available bigint NOT NULL,
-	total_lent bigint NOT NULL,
-	auther varchar(255),
+	copies_available bigint NOT NULL default 0,
+	total_lent bigint NOT NULL default 0,
+	author varchar(255),
 	publisher varchar(255),
 	registration_date datetime NOT NULL DEFAULT now(),
-	isActive bool NOT NULL UNIQUE DEFAULT true,
+	isActive bool NOT NULL  DEFAULT true,
 	subject bigint(255) NOT NULL,
 	PRIMARY KEY (id),
     FOREIGN KEY (subject) REFERENCES Subject (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE Subject (
-	id bigint NOT NULL AUTO_INCREMENT,
-	subject bigint NOT NULL,
-	PRIMARY KEY (id)
-);
 
 CREATE TABLE Payment (
 	id bigint NOT NULL AUTO_INCREMENT,
@@ -68,6 +69,7 @@ CREATE TABLE Records(
     
     FOREIGN KEY (user) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
 
 CREATE TABLE Lent_details (
 	record_id bigint NOT NULL,
