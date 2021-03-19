@@ -3,7 +3,7 @@
 // const User = require('../models/User')
 
 // const sequelize = new Sequelize (
-//     dbConfig.name, 
+//     dbConfig.dbname, 
 //     dbConfig.user, 
 //     dbConfig.password, 
 //     {
@@ -27,3 +27,16 @@
 
 
 // module.exports = {sequelize, db}
+
+// ==================================
+// ==================================
+
+const mysql = require('mysql')
+const db = mysql.createConnection({
+    host     : 'localhost',
+    user     : 'root',
+    password : 'root',
+    database : 'mylibrary'
+  });
+
+module.exports = db

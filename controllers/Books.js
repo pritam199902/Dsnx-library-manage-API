@@ -1,7 +1,51 @@
 // Add new book POST
 exports.AddNewBook = (req, res)=>{
+    // user input field destructuring
     const {name,isbn,copies_available,author,publisher,subject} = req.body
-    res.json(req.body);
+    
+
+    // nullity checker function
+     const checkNull = (str) => { 
+        const result = str.length > 0 && str != " " ? true : false
+        return result
+     }
+ 
+     // obj
+     const context = {}
+ 
+     // check nullity on each field
+     if (!checkNull(name) || isbn.length!=13 || typeof copies_available != "number" || !checkNull(author) || !checkNull(publisher) || !checkNull(subject) ){
+         context.error = true
+         context.message = "Please fill all the required information and try again!"
+         return res.json(context)
+     }
+     else {
+        const bookData = {}
+
+        bookData.name = name
+        bookData.isbn = isbn
+        bookData.copies_available = copies_available
+        bookData.author = author
+        bookData.publisher = publisher
+
+        context.book = bookData
+
+        // check subject validation
+        if(1==1){
+            bookData.subject = subject
+            context.book = bookData
+
+        }else{
+            context.error = true
+            context.message = "Invalid subject selected! Please select a valid select."
+            return res.json(context)
+        }
+
+        // save to database
+        return res.json(context)
+
+     }
+
 }
 
 // get all book GET
