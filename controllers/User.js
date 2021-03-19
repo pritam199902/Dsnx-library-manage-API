@@ -134,6 +134,9 @@ exports.GetAllUser = async (req, res) => {
 //   }
 
     const {search, filter, sort} = req.body
+    
+    if(!search || !filter || !sort) return errorHandle(req, res, "Please provide 'Search', 'Filter' and 'Sort'");
+    
     const context={}
 
 
@@ -163,7 +166,8 @@ exports.GetAllUser = async (req, res) => {
 // get user by id GET
 exports.GetUserById = async(req, res) => {
 //   return res.json(req.params);
-const {id} = req.params
+
+    const {id} = req.params
     const context={}
 
 
@@ -186,13 +190,53 @@ const {id} = req.params
 };
 
 // update user by id PUT
-exports.UpdateUserById = (req, res) => {
-  res.json({ body: req.body, params: req.params });
+exports.UpdateUserById =async (req, res) => {
+  // res.json({ body: req.body, params: req.params });
+  const {name, category, username} = req.body;
+  const {id} = req.params
+
+  if(!name || !username || !category) return errorHandle(req, res, "Please provide 'Name', 'Username' and 'Category'");
+
+  const context = {}
+
+  const delUser = `UPDATE user SET name = "${name}", username = "${username}", category = ${Number(category)} WHERE id = ${id} ;`;
+  db.query(delUser, (err, result) => {
+        if (err) {
+           return errorHandle(req, res, err.sqlMessage);
+        } else if (result.length < 1) {
+            const msg = "No result found!";
+            return errorHandle(req, res, msg);
+        } else {
+            context.error = false;
+            context.message = "User updated!";
+            console.log(result);
+            return res.json(context);
+        }
+    });
+
 };
 
 // delete user by id DELETE
-exports.DeleteUserById = (req, res) => {
-  res.json(req.params);
+exports.DeleteUserById =async (req, res) => {
+//   res.json(req.params);
+    const {id} = req.params
+    const context={}
+
+    const delUser = `DELETE FROM user WHERE id = ${id} ;`;
+    await db.query(delUser, (err, result) => {
+        if (err) {
+           return errorHandle(req, res, err.message);
+        } else if (result.length < 1) {
+            const msg = "No result found!";
+            return errorHandle(req, res, msg);
+        } else {
+            context.error = false;
+            context.message = "User deleted!";
+            console.log(result);
+            return res.json(context);
+        }
+    });
+
 };
 
 ///////////////////////////////////////
