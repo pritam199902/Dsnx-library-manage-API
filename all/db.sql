@@ -41,7 +41,7 @@ CREATE TABLE Book (
 
 CREATE TABLE Payment (
 	id bigint NOT NULL AUTO_INCREMENT,
-	payDate DATE NOT NULL,
+	payDate DATETIME NOT NULL DEFAULT NOW(),
 	payAmoun bigint,
 	record_id bigint NOT NULL,
 	user bigint NOT NULL,
@@ -59,11 +59,11 @@ CREATE TABLE Pay_info (
 
 CREATE TABLE Records(
 	id bigint NOT NULL AUTO_INCREMENT,
-	lent_date DATE NOT NULL,
-	due_date DATE NOT NULL,
+	lent_date DATETIME NOT NULL default NOW(),
+	due_date DATETIME NOT NULL default (DATE_ADD(NOW(), INTERVAL 1 MONTH)),
 	isDueOver bool NOT NULL DEFAULT false,
 	isReturned bool NOT NULL DEFAULT false,
-	isPaid bool NOT NULL DEFAULT true,
+	isPaid bool NOT NULL DEFAULT FALSE,
 	user bigint NOT NULL,
 	PRIMARY KEY (id),
     
@@ -78,4 +78,19 @@ CREATE TABLE Lent_details (
     FOREIGN KEY (book_id) REFERENCES book (id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (record_id) REFERENCES records (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+
+
+
+-- ------------------------------- --
+CREATE TABLE test(
+	id bigint NOT NULL AUTO_INCREMENT,
+	dt DATETIME not null default NOW(),
+	due DATETIME NOT NULL default (DATE_ADD(now(), INTERVAL 1 MONTH)),
+	isDueOver bool NOT NULL DEFAULT false,
+	PRIMARY KEY (id)
+    
+);
+
+
 

@@ -1,6 +1,8 @@
 // Add new record POST
 exports.AddNewRecord = (req, res)=>{
-    res.json(req.body);
+    // res.json(req.body);
+    
+
 }
 
 // get all record GET
