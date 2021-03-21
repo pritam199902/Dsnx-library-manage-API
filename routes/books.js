@@ -1,11 +1,13 @@
 const router = require('express').Router()
 const book = require('../controllers/Books')
+const {isLibrarian, isNotLibrarian, isLoggedIn, isNotLoggedIn} = require('../middleware/checkUser')
 
-router.get('/', book.GetAllBook )
-router.post('/', book.AddNewBook )
-router.get('/:id', book.GetBookById )
-router.put('/:id', book.UpdateBookById )
-router.delete('/:id', book.DeleteBookById )
+
+router.get('/', isLoggedIn, book.GetAllBook )
+router.post('/', isLoggedIn,isLibrarian, book.AddNewBook )
+router.get('/:id',isLoggedIn, book.GetBookById )
+router.put('/:id',isLoggedIn,isLibrarian, book.UpdateBookById )
+router.delete('/:id',isLoggedIn,isLibrarian, book.DeleteBookById )
 
 
 module.exports = router

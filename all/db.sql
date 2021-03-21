@@ -39,24 +39,6 @@ CREATE TABLE Book (
 );
 
 
-CREATE TABLE Payment (
-	id bigint NOT NULL AUTO_INCREMENT,
-	payDate DATETIME NOT NULL DEFAULT NOW(),
-	payAmoun bigint,
-	record_id bigint NOT NULL,
-	user bigint NOT NULL,
-	PRIMARY KEY (id),
-    
-    FOREIGN KEY (user) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (record_id) REFERENCES records (id) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
-CREATE TABLE Pay_info (
-	book bigint NOT NULL,
-	payment_id bigint NOT NULL,
-    FOREIGN KEY (payment_id) REFERENCES payment (id) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
 CREATE TABLE Records(
 	id bigint NOT NULL AUTO_INCREMENT,
 	lent_date DATETIME NOT NULL default NOW(),
@@ -65,15 +47,42 @@ CREATE TABLE Records(
 	isReturned bool NOT NULL DEFAULT false,
 	isPaid bool NOT NULL DEFAULT FALSE,
 	user bigint NOT NULL,
-	PRIMARY KEY (id),
-    
+    librarian bigint NOT NULL,
+    last_updated_by bigint not null,
+	last_updated_on datetime default NOW(),
+	
+    PRIMARY KEY (id),
+    FOREIGN KEY (last_updated_by) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (librarian) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (user) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE Payment (
+	id bigint NOT NULL AUTO_INCREMENT,
+	payDate DATETIME NOT NULL DEFAULT NOW(),
+	payAmoun bigint,
+	record_id bigint NOT NULL,
+	payment_accepter bigint NOT NULL,
+	PRIMARY KEY (id),
+    
+    FOREIGN KEY (payment_accepter) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (record_id) REFERENCES records (id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- CREATE TABLE Pay_info (
+-- 	book bigint NOT NULL,
+-- 	payment_id bigint NOT NULL,
+--     FOREIGN KEY (payment_id) REFERENCES payment (id) ON DELETE CASCADE ON UPDATE CASCADE
+-- );
+
+
 
 CREATE TABLE Lent_details (
+	id bigint NOT NULL AUTO_INCREMENT,
 	record_id bigint NOT NULL,
 	book_id bigint NOT NULL,
+    
+    primary key(id),
     
     FOREIGN KEY (book_id) REFERENCES book (id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (record_id) REFERENCES records (id) ON DELETE CASCADE ON UPDATE CASCADE
@@ -83,14 +92,14 @@ CREATE TABLE Lent_details (
 
 
 -- ------------------------------- --
-CREATE TABLE test(
-	id bigint NOT NULL AUTO_INCREMENT,
-	dt DATETIME not null default NOW(),
-	due DATETIME NOT NULL default (DATE_ADD(now(), INTERVAL 1 MONTH)),
-	isDueOver bool NOT NULL DEFAULT false,
-	PRIMARY KEY (id)
-    
-);
+-- CREATE TABLE test(
+-- 	id bigint NOT NULL AUTO_INCREMENT,
+-- 	dt DATETIME not null default NOW(),
+-- 	due DATETIME NOT NULL default (DATE_ADD(now(), INTERVAL 1 MONTH)),
+-- 	isDueOver bool NOT NULL DEFAULT false,
+-- 	PRIMARY KEY (id)
+--     
+-- );
 
 
 

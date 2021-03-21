@@ -4,6 +4,8 @@ const errorHandle = require("../config/errorHandle");
 const db = require("../config/database");
 const config = require("../config/info");
 
+const EXPTIME = "5h"
+
 // get token - login POST
 exports.GetToken = async (req, res) => {
   // res.json({body : res.body, token: "new token"})
@@ -47,7 +49,7 @@ exports.GetToken = async (req, res) => {
 
           // encoding token
           const token = await jwt.sign(userData, secret, {
-            expiresIn: "60000",
+            expiresIn: EXPTIME,
           });
 
           // console.log(token);
@@ -62,11 +64,6 @@ exports.GetToken = async (req, res) => {
     }
   });
 
-  // jwt.sign({
-  //     data: {user[0]}
-  //   },
-  //   secret,
-  //   { expiresIn: '1h' });
 };
 
 // get fresh token - POST
@@ -92,11 +89,10 @@ exports.RefreshToken = async (req, res) => {
             category: user[0].category,
           };
         const secret = config.jwtSecret;
-        const newToken = await jwt.sign(userData, secret, { expiresIn: "60000" });
+        const newToken = await jwt.sign(userData, secret, { expiresIn: EXPTIME });
 
         context.error = false;
         context.message = `Welcome back ${userData.name}`;
-        context.data = user[0];
         context.token = newToken;
         return res.json(context);
     }

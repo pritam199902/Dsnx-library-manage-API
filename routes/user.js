@@ -18,5 +18,4 @@ router.post('/getToken', authUser.GetToken ) // login
 router.post('/refreshToken', isNotLoggedIn, authUser.RefreshToken ) // get refresh token
 
 
-
 module.exports = router
