@@ -15,8 +15,9 @@ CREATE TABLE if not exists User  (
 	registration_date datetime NOT NULL DEFAULT NOW(),
 	category bigint(255) NOT NULL,
 	isActive bool NOT NULL default true,
-	PRIMARY KEY (id),
     registered_by bigint ,
+
+	PRIMARY KEY (id),
     FOREIGN KEY (registered_by) REFERENCES User (id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (category) REFERENCES Category (id) ON DELETE CASCADE ON UPDATE CASCADE
 );

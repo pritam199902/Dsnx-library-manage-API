@@ -1,9 +1,9 @@
 module.exports ={
     db : {
         dbname : "mylibrary",
-        user : "root",
-        password : "root",
-        host : "localhost",
+        user : process.env.DB_USER,
+        password : process.env.DB_PASSWORD,
+        host : process.env.DB_HOST,
         dialect : "mysql",
         pool : {
             max: 5,
