@@ -7,8 +7,8 @@ const {isLibrarian, isNotLibrarian, isLoggedIn, isNotLoggedIn} = require('../mid
 
 
 // other
-router.get('/', user.GetAllUser )
-router.post('/',isNotLoggedIn, user.RegisterUser )
+router.get('/',isLoggedIn, user.GetAllUser )
+router.post('/', user.RegisterUser )
 router.get('/:id', isLoggedIn, user.GetUserById )
 router.put('/:id', isLoggedIn, isLibrarian, user.UpdateUserById )
 router.delete('/:id',isLoggedIn, isLibrarian, user.DeleteUserById )

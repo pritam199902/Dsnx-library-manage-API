@@ -1,5 +1,13 @@
 create database if not exists mylibrary;
-CREATE TABLE User  (
+use mylibrary;
+CREATE TABLE if not exists Category (
+	id bigint NOT NULL AUTO_INCREMENT UNIQUE,
+	category varchar(255) NOT NULL UNIQUE,
+	PRIMARY KEY (id)
+);
+
+
+CREATE TABLE if not exists User  (
 	id bigint NOT NULL AUTO_INCREMENT,
 	name varchar(255),
 	username varchar(255) NOT NULL UNIQUE,
@@ -8,22 +16,19 @@ CREATE TABLE User  (
 	category bigint(255) NOT NULL,
 	isActive bool NOT NULL default true,
 	PRIMARY KEY (id),
+    registered_by bigint ,
+    FOREIGN KEY (registered_by) REFERENCES User (id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (category) REFERENCES Category (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE Category (
-	id bigint NOT NULL AUTO_INCREMENT UNIQUE,
-	category varchar(255) NOT NULL UNIQUE,
-	PRIMARY KEY (id)
-);
 
-CREATE TABLE Subject (
+CREATE TABLE if not exists Subject (
 	id bigint NOT NULL UNIQUE AUTO_INCREMENT,
 	subject varchar(200) NOT NULL,
 	PRIMARY KEY (id)
 );
 
-CREATE TABLE Book (
+CREATE TABLE if not exists Book (
 	id bigint NOT NULL AUTO_INCREMENT,
 	name varchar(255) NOT NULL,
 	isbn bigint(13) NOT NULL UNIQUE,
@@ -39,7 +44,7 @@ CREATE TABLE Book (
 );
 
 
-CREATE TABLE Records(
+CREATE TABLE if not exists Records(
 	id bigint NOT NULL AUTO_INCREMENT,
 	lent_date DATETIME NOT NULL default NOW(),
 	due_date DATETIME NOT NULL default (DATE_ADD(NOW(), INTERVAL 1 MONTH)),
@@ -57,14 +62,17 @@ CREATE TABLE Records(
     FOREIGN KEY (user) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE Payment (
+CREATE TABLE if not exists Payment (
 	id bigint NOT NULL AUTO_INCREMENT,
 	payDate DATETIME NOT NULL DEFAULT NOW(),
 	payAmoun bigint,
 	record_id bigint NOT NULL,
 	payment_accepter bigint NOT NULL,
-	PRIMARY KEY (id),
+    last_updated_by bigint NOT NULL,
+    last_updated_on datetime default NOW(),
     
+	PRIMARY KEY (id),
+    FOREIGN KEY (last_updated_by) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (payment_accepter) REFERENCES user (id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (record_id) REFERENCES records (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -77,7 +85,7 @@ CREATE TABLE Payment (
 
 
 
-CREATE TABLE Lent_details (
+CREATE TABLE if not exists Lent_details (
 	id bigint NOT NULL AUTO_INCREMENT,
 	record_id bigint NOT NULL,
 	book_id bigint NOT NULL,
@@ -88,7 +96,12 @@ CREATE TABLE Lent_details (
     FOREIGN KEY (record_id) REFERENCES records (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+-- init values
+insert into subject (subject) 
+value("Python") ,('Java'),('Node'),('SQL');
 
+insert into category (category) 
+value("Librarian") ,('Student'),('Faculty');
 
 
 -- ------------------------------- --

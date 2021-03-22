@@ -13,7 +13,7 @@ exports.AddNewBook = async (req, res) => {
       "Please provide name, isbn, copies_available, author, publisher, subject"
     );
 
-  console.log(req.body);
+  // console.log(req.body);
   // nullity checker function
   const checkNull = (str) => {
     const result = str.length > 0 && str != " " ? true : false;
@@ -112,10 +112,10 @@ exports.GetAllBook = async (req, res) => {
   const context = {};
 
   const getBook = `SELECT * FROM book
-WHERE
-name like "%${search.name}%" AND subject = ${Number(filter.subject)}
-ORDER BY name ${sort.name}, copies_available ${sort.copies_available}
-`;
+    WHERE
+    name like "%${search.name}%" AND subject = ${Number(filter.subject)}
+    ORDER BY name ${sort.name}, copies_available ${sort.copies_available}
+    `;
 
   await db.query(getBook, (err, result) => {
     if (err) {
@@ -161,7 +161,7 @@ exports.GetBookById = async (req, res) => {
 // update book by id PUT
 exports.UpdateBookById = (req, res) => {
   //   res.json({ body: req.body, params: req.params });
-  const { name, copies_available, author,publisher, subject} = req.body;
+  const { name, copies_available, author, publisher, subject } = req.body;
   const { id } = req.params;
 
   if (!name || !copies_available || !author || !publisher || !subject)
@@ -173,41 +173,56 @@ exports.UpdateBookById = (req, res) => {
 
   const context = {};
 
-  const getBook = `UPDATE book 
-  SET name = "${name}", copies_available = ${Number(copies_available)}, subject = ${Number(subject)}, author = "${author}", publisher = "${publisher}"  
-  WHERE id = ${id} ;`;
-  db.query(getBook, (err, result) => {
-      console.log("UPDATE BOOK : ",result);
-    if (err) {
-      return errorHandle(req, res, err.sqlMessage);
-    } else if (result.length < 1) {
-      const msg = "No result found!";
-      return errorHandle(req, res, msg);
-    } else {
-      context.error = false;
-      context.message = "Book updated!";
-      // console.log(result);
-      return res.json(context);
+  const find = `SELECT * FROM book WHERE id = ${id} ;`;
+  db.query(deleteRecord, async (err, rec) => {
+    if (err) return errorHandle(req, res, err.sqlMessage);
+    if (rec.length < 1) return errorHandle(req, res, "No result found!");
+    else {
+      const getBook = `UPDATE book 
+        SET name = "${name}", copies_available = ${Number(copies_available)}, 
+        subject = ${Number(subject)}, 
+        author = "${author}", publisher = "${publisher}"  
+        WHERE id = ${id} ;`;
+      db.query(getBook, (err, result) => {
+        // console.log("UPDATE BOOK : ",result);
+        if (err) {
+          return errorHandle(req, res, err.sqlMessage);
+        } else if (result.length < 1) {
+          const msg = "No result found!";
+          return errorHandle(req, res, msg);
+        } else {
+          context.error = false;
+          context.message = "Book updated!";
+          // console.log(result);
+          return res.json(context);
+        }
+      });
     }
   });
 };
 
 // delete book by id DELETE
-exports.DeleteBookById = async(req, res) => {
-//   res.json(req.params);
-const {id} = req.params
-    const context={}
+exports.DeleteBookById = async (req, res) => {
+  //   res.json(req.params);
+  const { id } = req.params;
+  const context = {};
 
-    const delUser = `DELETE FROM book WHERE id = ${id} ;`;
-    await db.query(delUser, (err, result) => {
+  const find = `SELECT * FROM book WHERE id = ${id} ;`;
+  db.query(deleteRecord, async (err, rec) => {
+    if (err) return errorHandle(req, res, err.sqlMessage);
+    if (rec.length < 1) return errorHandle(req, res, "No result found!");
+    else {
+      const delUser = `DELETE FROM book WHERE id = ${id} ;`;
+      await db.query(delUser, (err, result) => {
         if (err) {
-           return errorHandle(req, res, err.sqlMessage);
+          return errorHandle(req, res, err.sqlMessage);
         } else {
-        
-            context.error = false;
-            context.message = "Book deleted!";
-            // console.log(result);
-            return res.json(context);
+          context.error = false;
+          context.message = "Book deleted!";
+          // console.log(result);
+          return res.json(context);
         }
-    });
+      });
+    }
+  });
 };

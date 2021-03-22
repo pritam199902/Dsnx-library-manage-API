@@ -68,9 +68,26 @@ exports.AddNewRecord = async (req, res) => {
               await db.query(lent, async (err, result) => {
                 if (err) return errorHandle(req, res, err.sqlMessage);
                 if (result) {
-                  //   console.log(">> " + result);
-                  // get inserted record
-                  const getRecord = `SELECT 
+                  var bkid = "";
+                  books.map((b, i) => {
+                    // console.log(b+" --> "+i);
+                    bkid += `${Number(b)},`;
+                  });
+                  bkid = bkid.slice(0, bkid.length - 1);
+
+                  // console.log(bkid);
+
+                  // increment lent counter of the books
+                  const updateBookLentCounter = `UPDATE book 
+                  SET total_lent = total_lent + 1 , copies_available = copies_available - 1 
+                  WHERE id IN (${bkid})`;
+
+                  await db.query(updateBookLentCounter, async (err, done) => {
+                    if (err) return errorHandle(req, res, err.sqlMessage);
+                    if (done) {
+                      //   console.log(">> " + result);
+                      // get inserted record
+                      const getRecord = `SELECT 
                         r.id, r.lent_date, r.due_date, r.isDueOver, r.isReturned, r.isPaid,
                         u2.id as user_id, u2.name as user,u1.id as librarian_id, u1.name as librarian
                         FROM records r 
@@ -79,34 +96,44 @@ exports.AddNewRecord = async (req, res) => {
                         JOIN user u2
                         ON u2.id = r.user
                         WHERE r.id = ${saved.insertId} ;`;
-                  const getRecordDetails = `SELECT b.id , b.name as book, l.record_id 
+                      const getRecordDetails = `SELECT b.id , b.name as book, l.record_id 
                         FROM lent_details l
                         JOIN book b
                         ON b.id = l.book_id
                         WHERE l.record_id = ${saved.insertId} ;`;
 
-                  const context = {};
+                      const context = {};
 
-                  await db.query(getRecord, async (err, rec) => {
-                    if (err) return errorHandle(req, res, err.sqlMessage);
-                    if (rec.length < 1)
-                      return errorHandle(req, res, "No result found!");
-                    else {
-                      await db.query(getRecordDetails, async (err, details) => {
+                      await db.query(getRecord, async (err, rec) => {
                         if (err) return errorHandle(req, res, err.sqlMessage);
-                        if (details.length < 1)
+                        if (rec.length < 1)
                           return errorHandle(req, res, "No result found!");
                         else {
-                          context.error = false;
-                          context.message = "Record successfully saved!";
-                          context.data = {
-                            record: rec[0],
-                            details,
-                          };
-                          return res.json(context);
+                          await db.query(
+                            getRecordDetails,
+                            async (err, details) => {
+                              if (err)
+                                return errorHandle(req, res, err.sqlMessage);
+                              if (details.length < 1)
+                                return errorHandle(
+                                  req,
+                                  res,
+                                  "No result found!"
+                                );
+                              else {
+                                context.error = false;
+                                context.message = "Record successfully saved!";
+                                context.data = {
+                                  record: rec[0],
+                                  details,
+                                };
+                                return res.json(context);
+                              }
+                            }
+                          );
+                          //   console.log(details);
                         }
                       });
-                      //   console.log(details);
                     }
                   });
                 }
@@ -194,34 +221,91 @@ exports.UpdateRecordById = async (req, res) => {
   const token = req.headers.authorization;
   //   const secret = config.jwtSecret;
   const updater = await jwt.decode(token);
-  const update_date = new Date().toISOString().replace("T", " ").slice(0, 19)
+  const update_date = new Date().toISOString().replace("T", " ").slice(0, 19);
 
+  const context = { message: "" };
   // check record id validity
   const recValidity = `SELECT * FROM records WHERE id = ${id}`;
-  await db.query(recValidity, async (err, rec) => {
+  await db.query(recValidity, async (err, recordInfo) => {
     if (err) return errorHandle(req, res, err.sqlMessage);
-    if (rec.length < 1) return errorHandle(req, res, "Invalid record!");
+    if (recordInfo.length < 1) return errorHandle(req, res, "Invalid record!");
     else {
-      const getRecord = `UPDATE records
-    SET 
-    isDueOver = ${isDueOver}, isReturned = ${isReturned}, isPaid = ${isPaid}, 
-    last_updated_by = ${updater.id}, last_updated_on = "${update_date}"
-    WHERE 
-    id = ${id} ;`;
-      const context = {};
-      //   console.log();
-
+      // return changed
+      //  if (isReturned == true){
+      var isAlreadyReturned = false;
+      var getRecord = "";
+      if (isReturned == true) {
+        if (recordInfo[0].isReturned == true) {
+          isAlreadyReturned = true;
+          context.message = "It is already returned and submitted!";
+          getRecord = `UPDATE records
+            SET 
+            isDueOver = ${isDueOver}, isPaid = ${isPaid}, 
+            last_updated_by = ${updater.id}, last_updated_on = "${update_date}"
+            WHERE 
+            id = ${id} ;`;
+        } else {
+          context.message = "Return accepted and submitted!";
+          getRecord = `UPDATE records
+              SET 
+              isDueOver = ${isDueOver}, isReturned = ${isReturned}, isPaid = ${isPaid}, 
+              last_updated_by = ${updater.id}, last_updated_on = "${update_date}"
+              WHERE 
+              id = ${id} ;`;
+        }
+      } else {
+        context.message = "Return accepted and submitted!";
+        getRecord = `UPDATE records
+            SET 
+            isDueOver = ${isDueOver}, isReturned = ${isReturned}, isPaid = ${isPaid}, 
+            last_updated_by = ${updater.id}, last_updated_on = "${update_date}"
+            WHERE 
+            id = ${id} ;`;
+      }
+      // console.log("get record",getRecord);
       await db.query(getRecord, async (err, rec) => {
         if (err) return errorHandle(req, res, err.sqlMessage);
-        if (rec.length < 1) return errorHandle(req, res, "No result found!");
-        else {
-          context.error = false;
-          context.message = `Record updated by ${updater.name}!`;
-          return res.json(context);
-          //   console.log(details);
+        // if (rec) return errorHandle(req, res, "No result found!");
+        if (rec) {
+          if (isAlreadyReturned) {
+            const bookList = `select l.book_id from lent_details l 
+                  join records r on r.id = l.record_id 
+                  where l.record_id = ${id} and r.isReturned = true;`;
+            db.query(bookList, (err, list) => {
+              if (err) return errorHandle(req, res, err.sqlMessage);
+              if (list.length < 1)
+                return errorHandle(
+                  req,
+                  res,
+                  "No book found in this record! It may be deleted by librarian!"
+                );
+              else {
+                console.log("list: ", list);
+                var bkid = "";
+                list.map((b, i) => {
+                  bkid += `${Number(b)},`;
+                });
+                bkid = bkid.slice(0, bkid.length - 1);
+                const restoreBook = `UPDATE book SET copies_available = copies_available + 1 WHERE id IN (${bkid});`;
+                db.query(bookList, (err, list) => {
+                  if (err) return errorHandle(req, res, err.sqlMessage);
+                  else {
+                    context.error = false;
+                    context.message += ` Record updated by ${updater.name}!`;
+                    return res.json(context);
+                  }
+                });
+              }
+            });
+          } else {
+            context.error = false;
+            context.message += ` Record updated by ${updater.name}!`;
+            return res.json(context);
+          }
+
         }
       });
-      //
+     
     }
   });
 };
@@ -230,24 +314,28 @@ exports.UpdateRecordById = async (req, res) => {
 exports.DeleteRecordById = async (req, res) => {
   //   res.json(req.params);
   const { id } = req.params;
-  const deleteRecord = `DELETE FROM records
-    WHERE id = ${id} ;`;
 
   const context = {};
-  //   console.log();
-  
   const token = req.headers.authorization;
-  //   const secret = config.jwtSecret;
   const updater = await jwt.decode(token);
 
-  await db.query(deleteRecord, async (err, rec) => {
+  const find = `SELECT * FROM records WHERE id = ${id} ;`;
+  db.query(deleteRecord, async (err, rec) => {
     if (err) return errorHandle(req, res, err.sqlMessage);
     if (rec.length < 1) return errorHandle(req, res, "No result found!");
     else {
-      context.error = false;
-      context.message = `Record updated by ${updater.name}!`;
-      return res.json(context);
-      //   console.log(details);
+      const deleteRecord = `DELETE FROM records
+        WHERE id = ${id} ;`;
+      db.query(deleteRecord, async (err, rec) => {
+        if (err) return errorHandle(req, res, err.sqlMessage);
+        if (rec) {
+          // console.log(rec);
+          context.error = false;
+          context.message = `Record deleted by ${updater.name}!`;
+          return res.json(context);
+          //   console.log(details);
+        }
+      });
     }
   });
 };
