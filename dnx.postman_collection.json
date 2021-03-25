@@ -1,0 +1,800 @@
+{
+	"info": {
+		"_postman_id": "cdc20287-229b-45bd-a8cc-03d7be69d507",
+		"name": "dnx",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:5000/users/getToken",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"\",\r\n    \"password\" : \"\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/users/getToken",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"users",
+						"getToken"
+					]
+				},
+				"description": "login"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:5000/users/refreshToken",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTYsIm5hbWUiOiJwcml0YW0gbGlicmFyaWFuIiwidXNlcm5hbWUiOiJwbS1saWIiLCJjYXRlZ29yeSI6MSwiaWF0IjoxNjE2MjI0NzY2LCJleHAiOjE2MTYyMjQ4MjZ9.RXaU5QA6h6U3z0o1T-cCnHNZGZEzNjEQVU_jyJ7WpaI",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlByaXRhbSBsaWIiLCJ1c2VybmFtZSI6InBtLWxpYiIsImNhdGVnb3J5IjoxLCJpYXQiOjE2MTYzMTgxMzcsImV4cCI6MTYxNjMzNjEzN30.JQfe8lgdVTH7Y37_rjrvVEvCWrBWG_c2iOIC5kGDMQA\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/users/refreshToken",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"users",
+						"refreshToken"
+					]
+				},
+				"description": "get refresh token"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:5000/users",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlByaXRhbSBsaWIiLCJ1c2VybmFtZSI6InBtLWxpYiIsImNhdGVnb3J5IjoxLCJpYXQiOjE2MTYzMTgxMzcsImV4cCI6MTYxNjMzNjEzN30.JQfe8lgdVTH7Y37_rjrvVEvCWrBWG_c2iOIC5kGDMQA",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\" : \"\",\r\n    \"username\": \"\",\r\n    \"category\" : \"1\",\r\n    \"password\" : \"\",\r\n    \"confirmPassword\" : \"\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"users"
+					]
+				},
+				"description": "create user"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:5000/books",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlByaXRhbSBsaWIiLCJ1c2VybmFtZSI6InBtLWxpYiIsImNhdGVnb3J5IjoxLCJpYXQiOjE2MTYzMTgxMzcsImV4cCI6MTYxNjMzNjEzN30.JQfe8lgdVTH7Y37_rjrvVEvCWrBWG_c2iOIC5kGDMQA",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Python data science\",\r\n    \"isbn\": \"1000000000003\",\r\n    \"copies_available\" : 6,\r\n    \"author\" : \"pritamdas\",\r\n    \"publisher\": \"pritamdas\",\r\n    \"subject\":1\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/books",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"books"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				},
+				"description": "add new book"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:5000/records",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlByaXRhbSBsaWIiLCJ1c2VybmFtZSI6InBtLWxpYiIsImNhdGVnb3J5IjoxLCJpYXQiOjE2MTYzODA5NzIsImV4cCI6MTYxNjM5ODk3Mn0.THf-uJUtAkBa5nMY8rAl20d6taQ5MaQegO9LSbl0nx0",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user\": 9,\r\n    \"books\" : [4]\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/records",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"records"
+					]
+				},
+				"description": "add new record"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:5000/payments",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlByaXRhbSBsaWIiLCJ1c2VybmFtZSI6InBtLWxpYiIsImNhdGVnb3J5IjoxLCJpYXQiOjE2MTYzMTgxMzcsImV4cCI6MTYxNjMzNjEzN30.JQfe8lgdVTH7Y37_rjrvVEvCWrBWG_c2iOIC5kGDMQA",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"payAmount\" : 300,\r\n\t\"record_id\" : 4\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/payments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"payments"
+					]
+				},
+				"description": "add new payment"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:5000/users",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n    \"search\": {\"name\": \"\"},\r\n    \"filter\": {\"category\": 1},\r\n    \"sort\": {\"name\": \"asc\", \"registration_date\": \"desc\"}\r\n  }"
+				},
+				"url": {
+					"raw": "http://localhost:5000/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"users"
+					]
+				},
+				"description": "search user"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:5000/books",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlByaXRhbSBsaWIiLCJ1c2VybmFtZSI6InBtLWxpYiIsImNhdGVnb3J5IjoxLCJpYXQiOjE2MTYzMTgxMzcsImV4cCI6MTYxNjMzNjEzN30.JQfe8lgdVTH7Y37_rjrvVEvCWrBWG_c2iOIC5kGDMQA"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n    \"search\": {\"name\": \"\"},\r\n    \"filter\": {\"subject\": 1},\r\n    \"sort\": {\"name\": \"asc\", \"copies_available\": \"desc\"}\r\n  }"
+				},
+				"url": {
+					"raw": "http://localhost:5000/books",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"books"
+					]
+				},
+				"description": "search books"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:5000/payments",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlByaXRhbSBsaWIiLCJ1c2VybmFtZSI6InBtLWxpYiIsImNhdGVnb3J5IjoxLCJpYXQiOjE2MTYzMTgxMzcsImV4cCI6MTYxNjMzNjEzN30.JQfe8lgdVTH7Y37_rjrvVEvCWrBWG_c2iOIC5kGDMQA",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:5000/payments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"payments"
+					]
+				},
+				"description": "get all payments"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:5000/records",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5000/records",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"records"
+					]
+				},
+				"description": "get all records"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:5000/statistics",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlByaXRhbSBsaWIiLCJ1c2VybmFtZSI6InBtLWxpYiIsImNhdGVnb3J5IjoxLCJpYXQiOjE2MTYzODA5NzIsImV4cCI6MTYxNjM5ODk3Mn0.THf-uJUtAkBa5nMY8rAl20d6taQ5MaQegO9LSbl0nx0",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5000/statistics",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"statistics"
+					]
+				},
+				"description": "statistics"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:5000/users/1",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlByaXRhbSBsaWIiLCJ1c2VybmFtZSI6InBtLWxpYiIsImNhdGVnb3J5IjoxLCJpYXQiOjE2MTYzOTIxNzEsImV4cCI6MTYxNjQxMDE3MX0.0T9E7YDVnNs2RIfwvt82o6p5SJvytU9_ST0awtwgiWo",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n    \"name\" : \"\",\r\n    \"username\": \"\",\r\n    \"category\" : \"2\"\r\n}\r\n\r\n"
+				},
+				"url": {
+					"raw": "http://localhost:5000/users/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"users",
+						"1"
+					]
+				},
+				"description": "get user"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:5000/books/1",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5000/records",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"records"
+					]
+				},
+				"description": "get a book"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:5000/payments/1",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5000/payments/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"payments",
+						"1"
+					]
+				},
+				"description": "get a payment info"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:5000/records/1",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5000/records/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"records",
+						"1"
+					]
+				},
+				"description": "get a record info"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:5000/users/1",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlByaXRhbSBsaWIiLCJ1c2VybmFtZSI6InBtLWxpYiIsImNhdGVnb3J5IjoxLCJpYXQiOjE2MTYzOTIxNzEsImV4cCI6MTYxNjQxMDE3MX0.0T9E7YDVnNs2RIfwvt82o6p5SJvytU9_ST0awtwgiWo",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n    \"name\" : \"\",\r\n    \"username\": \"\",\r\n    \"category\" : \"2\"\r\n}\r\n\r\n"
+				},
+				"url": {
+					"raw": "http://localhost:5000/users/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"users",
+						"1"
+					]
+				},
+				"description": "update user"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:5000/books/1",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlByaXRhbSBsaWIiLCJ1c2VybmFtZSI6InBtLWxpYiIsImNhdGVnb3J5IjoxLCJpYXQiOjE2MTYzMTgxMzcsImV4cCI6MTYxNjMzNjEzN30.JQfe8lgdVTH7Y37_rjrvVEvCWrBWG_c2iOIC5kGDMQA",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\" : \"Python with Flask\", \"copies_available\":20, \"author\" : \"Pritam\", \"publisher\" : \"ccc\", \"subject\" : 1\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/books/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"books",
+						"1"
+					]
+				},
+				"description": "update a book "
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:5000/records/5",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlByaXRhbSBsaWIiLCJ1c2VybmFtZSI6InBtLWxpYiIsImNhdGVnb3J5IjoxLCJpYXQiOjE2MTYzODA5NzIsImV4cCI6MTYxNjM5ODk3Mn0.THf-uJUtAkBa5nMY8rAl20d6taQ5MaQegO9LSbl0nx0",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"isDueOver\": 0,\r\n    \"isReturned\": 1,\r\n    \"isPaid\": 0\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/records/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"records",
+						"5"
+					]
+				},
+				"description": "update a record"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:5000/payments/1",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IlByaXRhbSBsaWIiLCJ1c2VybmFtZSI6InBtLWxpYiIsImNhdGVnb3J5IjoxLCJpYXQiOjE2MTYzMTgxMzcsImV4cCI6MTYxNjMzNjEzN30.JQfe8lgdVTH7Y37_rjrvVEvCWrBWG_c2iOIC5kGDMQA",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"payAmount\": \"\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/payments/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"payments",
+						"1"
+					]
+				},
+				"description": "update payment"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:5000/users/1",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5000/books/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"books",
+						"1"
+					]
+				},
+				"description": "delete user"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:5000/books/1",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5000/books/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"books",
+						"1"
+					]
+				},
+				"description": "delete a book"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:5000/records/1",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5000/records/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"records",
+						"1"
+					]
+				},
+				"description": "delete a record"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:5000/payments/1",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5000/payments/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"payments",
+						"1"
+					]
+				},
+				"description": "delete a payment"
+			},
+			"response": []
+		}
+	]
+}
