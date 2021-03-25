@@ -1,5 +1,5 @@
 // const Sequelize = require('sequelize')
-// const dbConfig = require('./dbConfig')
+const {db} = require('./dbConfig')
 // const User = require('../models/User')
 
 // const sequelize = new Sequelize (
@@ -32,11 +32,14 @@
 // ==================================
 
 const mysql = require('mysql')
-const db = mysql.createConnection({
-    host     : 'localhost',
-    user     : 'root',
-    password : 'root',
-    database : 'mylibrary'
-  });
+// const db = mysql.createConnection({
+//     host     : 'localhost',
+//     user     : 'root',
+//     password : 'root',
+//     database : 'mylibrary'
+//   });
 
-module.exports = db
+// updated
+  const database = mysql.createConnection(db);
+
+module.exports = database

@@ -3,10 +3,10 @@ require('dotenv').config()
 const express = require("express")
 const cors = require("cors")
 const PORT = 5000 || process.env.PORT
-const db = require('./config/database')
+// const{ db }= require('./config/dbConfig')
 
 // import db config
-// const {db} = require('./config/database')
+const db = require('./config/database')
 
 // import routers
 const booksRouter = require('./routes/books')
